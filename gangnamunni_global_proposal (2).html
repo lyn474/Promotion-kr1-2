@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>강남언니 글로벌 신규 입점 & 이벤트 확장 프로모션</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F7F5F2;font-family:'Noto Sans KR',sans-serif;color:#1a1a1a;min-height:100vh;padding:2rem 1rem 4rem}
+  .pdf-bar{max-width:720px;margin:0 auto 12px;display:flex;justify-content:flex-end;gap:8px}
+  .pdf-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #E0DDD8;border-radius:20px;padding:8px 18px;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:600;color:#555;cursor:pointer;transition:all 0.15s}
+  .pdf-btn:hover{border-color:#FF6B35;color:#FF6B35;background:#FFF8F5}
+  /* 병원명 입력 바 */
+  .hospital-bar{max-width:720px;margin:0 auto 0;background:#fff;border-radius:12px 12px 0 0;border:1.5px solid #E0DDD8;border-bottom:none;padding:14px 20px;display:flex;align-items:center;gap:10px}
+  .hospital-label{font-size:12px;font-weight:700;color:#888;white-space:nowrap}
+  .hospital-input{flex:1;border:none;outline:none;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;color:#1a1a1a;background:transparent;padding:0}
+  .hospital-input::placeholder{color:#ccc;font-weight:400}
+  .hospital-display{display:none;font-size:18px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:-0.3px}
+  .hospital-display .x-mark{color:rgba(255,255,255,0.6);margin:0 6px;font-weight:400}
+  .hospital-display .brand{color:#fff}
+  .hospital-display .hosp{color:#fff}
+  @media print{
+    .hospital-bar{display:none !important}
+    .hospital-display{display:block !important}
+  }
+  /* --- */
+  @media print{
+    body{background:#fff;padding:0}
+    .pdf-bar{display:none !important}
+    .page{max-width:100%;border-radius:0;box-shadow:none;margin:0}
+    .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(135deg,#FF6B35 0%,#FF8C5A 100%) !important}
+    .confidential{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#2C2C2A !important;color:#FAC775 !important}
+    .warn-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF0F0 !important}
+    .warn-emphasis{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#A32D2D !important;color:#fff !important}
+    .refund-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF8F5 !important}
+    .sched-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF8F5 !important}
+    .benefit-card,.note-box,.deadline-box,.example-box,.notice-inline{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .benefit-panel{display:block !important}
+    .benefit-panel.print-hide{display:none !important}
+    #hint-empty{display:none !important}
+    .country-row,.country-intro{display:none !important}
+    a.cta-link{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FF6B35 !important;color:#fff !important}
+    .step-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FF6B35 !important}
+    .hero-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:rgba(255,255,255,0.22) !important}
+    @page{margin:10mm;size:A4}
+  }
+  .page{max-width:720px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)}
+
+  /* header */
+  .hero{background:linear-gradient(135deg,#FF6B35 0%,#FF8C5A 100%);padding:2rem 2rem 1.75rem;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;right:-40px;top:-40px;width:220px;height:220px;background:rgba(255,255,255,0.08);border-radius:50%}
+  .hero::before{content:'';position:absolute;right:60px;bottom:-60px;width:150px;height:150px;background:rgba(255,255,255,0.06);border-radius:50%}
+  .hero-badge{display:inline-block;background:rgba(255,255,255,0.22);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:12px;letter-spacing:0.5px}
+  .hero-title{font-size:26px;font-weight:700;color:#fff;line-height:1.35;margin-bottom:6px;position:relative;z-index:1}
+  .hero-sub{font-size:13px;color:rgba(255,255,255,0.82);position:relative;z-index:1}
+
+  /* confidential bar */
+  .confidential{display:flex;align-items:flex-start;gap:10px;background:#2C2C2A;color:#FAC775;font-size:11.5px;font-weight:600;padding:12px 20px;line-height:1.6}
+  .confidential svg{flex-shrink:0;margin-top:1px}
+
+  /* body */
+  .body{padding:1.75rem 2rem}
+
+  .section-title{font-size:15px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .section-title::before{content:'';display:block;width:3px;height:18px;background:#FF6B35;border-radius:2px;flex-shrink:0}
+
+  /* schedule */
+  .sched-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.75rem}
+  .sched-card{background:#FFF8F5;border:1px solid #FFD4BF;border-radius:12px;padding:14px 16px}
+  .sched-label{font-size:11px;font-weight:700;color:#FF6B35;margin-bottom:5px}
+  .sched-date{font-size:16px;font-weight:700;color:#1a1a1a}
+  .sched-sub{font-size:11px;color:#888;margin-top:3px}
+
+  /* divider */
+  .divider{border:none;border-top:1px solid #F0EDE8;margin:1.75rem 0}
+
+  /* country toggle */
+  .country-intro{font-size:12px;color:#888;margin-bottom:10px}
+  .country-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem}
+  .country-btn{display:flex;align-items:center;gap:6px;padding:7px 15px;border-radius:20px;border:1.5px solid #E0DDD8;background:#fff;font-size:13px;font-weight:600;color:#888;cursor:pointer;transition:all 0.15s;font-family:'Noto Sans KR',sans-serif}
+  .country-btn:hover{border-color:#FF6B35;color:#FF6B35}
+  .country-btn.active{background:#FF6B35;border-color:#FF6B35;color:#fff}
+
+  .benefit-panel{display:none}
+  .benefit-panel.show{display:block;animation:fadeIn 0.2s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+
+  .benefit-card{background:#fff;border:1.5px solid #FF6B35;border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:10px}
+  .benefit-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:8px}
+  .benefit-desc{font-size:12.5px;color:#555;line-height:1.8}
+  .tag{display:inline-block;background:#FFF0EA;color:#CC4A1A;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;vertical-align:middle}
+
+  .notice-inline{background:#FFF3F3;border-left:2px solid #E24B4A;border-radius:0 8px 8px 0;padding:9px 12px;margin-top:10px;font-size:12px;color:#791F1F;line-height:1.65}
+  .check-list{list-style:none;margin-top:8px}
+  .check-list li{font-size:12px;color:#666;padding:2px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.6}
+  .check-list li::before{content:'✓';color:#FF6B35;font-weight:700;flex-shrink:0}
+  .check-list li.x::before{content:'✗';color:#E24B4A}
+
+  .empty-hint{font-size:12.5px;color:#aaa;padding:1rem 0;text-align:center}
+
+  /* promo section */
+  .refund-box{background:#FFF8F5;border:1.5px dashed #FF6B35;border-radius:12px;padding:1.1rem 1.25rem;margin:12px 0}
+  .refund-title{font-size:13px;font-weight:700;color:#CC4A1A;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .refund-desc{font-size:12.5px;color:#666;line-height:1.85}
+
+  .step-row{display:flex;flex-direction:column;gap:0;margin-top:1rem}
+  .step{display:flex;gap:12px;align-items:flex-start;position:relative;padding-bottom:16px}
+  .step:last-child{padding-bottom:0}
+  .step-line{position:absolute;left:15px;top:30px;width:2px;background:#E8E4DF;height:calc(100% - 8px)}
+  .step:last-child .step-line{display:none}
+  .step-num{width:30px;height:30px;border-radius:50%;background:#FF6B35;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1}
+  .step-body{flex:1}
+  .step-label{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:3px}
+  .step-desc{font-size:12px;color:#666;line-height:1.75}
+  .step-tag{display:inline-block;background:#FFF0EA;color:#CC4A1A;font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:4px}
+  .example-box{background:#F7F5F2;border-radius:8px;padding:9px 12px;font-size:12px;color:#666;line-height:1.8;margin-top:6px}
+  .example-box strong{color:#1a1a1a}
+
+  .cta-link{display:inline-flex;align-items:center;gap:5px;background:#FF6B35;color:#fff;font-size:11.5px;font-weight:700;padding:6px 14px;border-radius:20px;text-decoration:none;margin-top:8px}
+  .cta-link:hover{background:#CC4A1A}
+
+  .deadline-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .deadline-box{background:#F7F5F2;border-radius:10px;padding:12px 14px;text-align:center}
+  .deadline-label{font-size:11px;color:#888;margin-bottom:4px}
+  .deadline-date{font-size:15px;font-weight:700;color:#FF6B35}
+
+  /* warning */
+  .warn-box{background:#FFF0F0;border:1.5px solid #E24B4A;border-radius:12px;padding:1.25rem;margin-top:1.25rem}
+  .warn-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .warn-icon{width:28px;height:28px;background:#E24B4A;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .warn-header-text{font-size:14px;font-weight:700;color:#A32D2D}
+  .warn-emphasis{background:#A32D2D;color:#fff;font-size:12.5px;font-weight:700;padding:11px 14px;border-radius:8px;margin-bottom:10px;line-height:1.75}
+  .warn-list{list-style:none}
+  .warn-list li{font-size:12px;color:#791F1F;padding:5px 0;display:flex;gap:6px;line-height:1.6;border-bottom:0.5px solid #F7C1C1}
+  .warn-list li:last-child{border-bottom:none}
+  .warn-list li::before{content:'⚠';flex-shrink:0;font-size:11px}
+
+  /* note */
+  .note-box{background:#F7F5F2;border-radius:12px;padding:1rem 1.25rem;margin-top:1rem}
+  .note-list{list-style:none}
+  .note-list li{font-size:12px;color:#888;padding:3px 0;display:flex;gap:6px;line-height:1.6}
+  .note-list li::before{content:'·';flex-shrink:0}
+
+  .copy-img-box{background:#F0F4FF;border:1px solid #C5D5F5;border-radius:8px;padding:10px 12px;margin-top:8px}
+  .copy-img-title{font-size:11.5px;font-weight:700;color:#2A4E9F;margin-bottom:4px}
+  .copy-img-desc{font-size:11.5px;color:#445;line-height:1.7}
+  .contact-box{background:#F7F5F2;border-radius:12px;padding:14px 18px;margin-top:1rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .contact-label{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#aaa;white-space:nowrap}
+  .contact-value{display:flex;align-items:center;font-size:13px;font-weight:600;color:#444;gap:4px;flex:1}
+  .contact-input{border:none;border-bottom:1.5px solid #E0DDD8;outline:none;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#FF6B35;background:transparent;padding:1px 4px;width:120px;transition:border-color 0.15s}
+  .contact-input:focus{border-bottom-color:#FF6B35}
+  .contact-input::placeholder{color:#ccc;font-weight:400}
+  .contact-print{display:none;font-size:13px;font-weight:600;color:#444}
+  @media print{
+    .contact-box{background:#F7F5F2 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .contact-input{display:none !important}
+    .contact-print{display:inline !important}
+  }
+  /* footer */
+  .footer{background:#F7F5F2;padding:1.25rem 2rem;text-align:center;font-size:11px;color:#bbb;border-top:1px solid #EEE}
+
+  @media(max-width:540px){
+    body{padding:0 0 3rem}
+    .page{border-radius:0}
+    .body{padding:1.25rem 1.25rem}
+    .sched-grid,.deadline-row,.info-grid{grid-template-columns:1fr}
+    .hero{padding:1.5rem 1.25rem}
+    .hero-title{font-size:21px}
+  }
+</style>
+</head>
+<body>
+<div class="hospital-bar">
+  <span class="hospital-label">수신 병원</span>
+  <input class="hospital-input" id="hospitalInput" type="text" placeholder="병원명을 입력하세요 (예: ○○성형외과)" oninput="updateHospital(this.value)" />
+</div>
+<div class="pdf-bar">
+  <button class="pdf-btn" onclick="printPDF()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    PDF로 저장
+  </button>
+</div>
+<div class="page">
+
+  <div class="hero">
+    <div class="hospital-display" id="hospitalDisplay"></div>
+    <div id="logoDiv" style="margin-bottom:16px;display:flex;align-items:center;gap:10px">
+      <svg viewBox="0 0 148 28" width="148" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="강남언니">
+        <text x="0" y="22" font-family="'Noto Sans KR',sans-serif" font-size="20" font-weight="500" fill="#ffffff" letter-spacing="0.2">강남언니</text>
+      </svg>
+    </div>
+    <div class="hero-badge">글로벌 서비스 단독 프로모션</div>
+    <div class="hero-title">글로벌 신규 입점 &<br>이벤트 확장 프로모션</div>
+    <div class="hero-sub" style="margin-top:8px">일본 · 태국 · 미국 · 중국 · 대만 — 6월 한정 특별 혜택</div>
+  </div>
+
+  <div class="confidential">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FAC775" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    본 제안서는 특정 병원 대상으로만 제공되는 특별 프로모션입니다. 외부 공유 시 혜택이 즉시 종료될 수 있으니 반드시 보안 유지를 부탁드립니다.
+  </div>
+
+  <div class="body">
+
+    <!-- 일정 -->
+    <div class="section-title">프로모션 일정</div>
+    <div class="sched-grid">
+      <div class="sched-card">
+        <div class="sched-label">이벤트 접수 마감</div>
+        <div class="sched-date">2026.06.05(금)</div>
+        <div class="sched-sub">이날까지 접수 필수</div>
+      </div>
+      <div class="sched-card">
+        <div class="sched-label">글로벌 서비스 계약 및 이벤트 승인 마감</div>
+        <div class="sched-date">2026.06.26(금)</div>
+        <div class="sched-sub">승인 기준 — 이 날까지 완료 필수</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 혜택 1 -->
+    <div class="section-title">혜택 1 — 국가별 월정액 면제</div>
+    <div class="country-intro">해당 병원의 대상 국가를 선택하세요 (복수 선택 가능).</div>
+    <div class="country-row">
+      <button class="country-btn" onclick="toggleCountry('jp')" id="btn-jp">🇯🇵 일본</button>
+      <button class="country-btn" onclick="toggleCountry('th')" id="btn-th">🇹🇭 태국</button>
+      <button class="country-btn" onclick="toggleCountry('us')" id="btn-us">🇺🇸 미국</button>
+      <button class="country-btn" onclick="toggleCountry('cn')" id="btn-cn">🇨🇳 중국</button>
+      <button class="country-btn" onclick="toggleCountry('tw')" id="btn-tw">🇹🇼 대만</button>
+    </div>
+
+    <div id="hint-empty" class="empty-hint">국가를 선택하면 혜택 내용이 표시됩니다.</div>
+
+    <div class="benefit-panel" id="panel-jp">
+      <div class="benefit-card">
+        <div class="benefit-title">🇯🇵 일본 — 신규 입점 병원 한정 1개월 월정액 면제 <span class="tag">100만원 / VAT 별도</span></div>
+        <div class="benefit-desc">
+          일본 서비스는 <strong>원칙적으로 월정액 면제가 없습니다.</strong><br>
+          이번 프로모션 한정으로, <strong style="color:#CC4A1A">신규 입점 병원에 한해</strong> 6월 26일까지 서비스 등록 + 이벤트 승인 기준을 충족하는 경우 1개월 월정액을 면제해드립니다.
+          <div class="notice-inline">
+            <strong>⚠ 이미 입점한 병원의 경우</strong><br>
+            기존 입점 병원은 월정액 면제 혜택이 적용되지 않습니다.<br>이벤트 등록 CPV 환급 프로모션(혜택 2)은 별도로 적용 가능합니다.
+          </div>
+          <ul class="check-list" style="margin-top:10px">
+            <li>2026.06.26까지 글로벌 서비스 계약 + 이벤트 등록(승인 기준) 완료 필수</li>
+            <li>조건 미충족 시 혜택 적용 불가</li>
+            <li class="x">이미 입점한 병원은 월정액 면제 미적용</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefit-panel" id="panel-th">
+      <div class="benefit-card">
+        <div class="benefit-title">🇹🇭 태국 — 한시적 월정액 면제 <span class="tag">100만원 / VAT 별도</span></div>
+        <div class="benefit-desc">
+          입점 시 <strong style="color:#CC4A1A">월정액(100만원, VAT 별도)을 한시적으로 면제</strong>해드립니다. 유료 전환 시 전환 한 달 전에 사전 고지 예정입니다.
+          <ul class="check-list" style="margin-top:10px">
+            <li>2026.06.26까지 글로벌 서비스 계약 + 이벤트 등록(승인 기준) 완료 필수</li>
+            <li>유료 전환 1개월 전 고지 예정</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefit-panel" id="panel-us">
+      <div class="benefit-card">
+        <div class="benefit-title">🇺🇸 미국 — 한시적 월정액 면제 <span class="tag">100만원 / VAT 별도</span></div>
+        <div class="benefit-desc">
+          입점 시 <strong style="color:#CC4A1A">월정액(100만원, VAT 별도)을 한시적으로 면제</strong>해드립니다. 유료 전환 시 전환 한 달 전에 사전 고지 예정입니다.
+          <ul class="check-list" style="margin-top:10px">
+            <li>2026.06.26까지 글로벌 서비스 계약 + 이벤트 등록(승인 기준) 완료 필수</li>
+            <li>유료 전환 1개월 전 고지 예정</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefit-panel" id="panel-cn">
+      <div class="benefit-card">
+        <div class="benefit-title">🇨🇳 중국 — 한시적 월정액 면제 <span class="tag">100만원 / VAT 별도</span></div>
+        <div class="benefit-desc">
+          입점 시 <strong style="color:#CC4A1A">월정액(100만원, VAT 별도)을 한시적으로 면제</strong>해드립니다. 유료 전환 시 전환 한 달 전에 사전 고지 예정입니다.
+          <ul class="check-list" style="margin-top:10px">
+            <li>2026.06.26까지 글로벌 서비스 계약 + 이벤트 등록(승인 기준) 완료 필수</li>
+            <li>유료 전환 1개월 전 고지 예정</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefit-panel" id="panel-tw">
+      <div class="benefit-card">
+        <div class="benefit-title">🇹🇼 대만 — 한시적 월정액 면제 <span class="tag">100만원 / VAT 별도</span></div>
+        <div class="benefit-desc">
+          입점 시 <strong style="color:#CC4A1A">월정액(100만원, VAT 별도)을 한시적으로 면제</strong>해드립니다. 유료 전환 시 전환 한 달 전에 사전 고지 예정입니다.
+          <ul class="check-list" style="margin-top:10px">
+            <li>2026.06.26까지 글로벌 서비스 계약 + 이벤트 등록(승인 기준) 완료 필수</li>
+            <li>유료 전환 1개월 전 고지 예정</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 혜택 2 -->
+    <div class="section-title">혜택 2 — 이벤트 등록 CPV 환급 프로모션</div>
+    <div style="font-size:12.5px;color:#666;margin-bottom:14px">신규 이벤트를 7개 이상 등록하고 3개월간 유지하면 CPV 상위 3개 이벤트에서 발생한 CPV 30%를 환급해드립니다.</div>
+
+    <div class="refund-box">
+      <div class="refund-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#CC4A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 12l4-4M3 12l4 4M21 6H8M21 18H8"/></svg>
+        환급 조건 요약
+      </div>
+      <div class="refund-desc">
+        <strong style="color:#1a1a1a">신규 이벤트 7개 이상 등록</strong> 후,<br>
+        <strong style="color:#CC4A1A">3개월간 신규 등록된 7개 이벤트 유지 조건 충족 시</strong><br>
+        → 신규 등록 이벤트 중 <strong style="color:#CC4A1A">CPV 과금 상위 3개</strong>에서 발생한 CPV의 <strong style="color:#CC4A1A">30% 환급</strong>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step">
+        <div class="step-num">1</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-label">이벤트 접수<span class="step-tag">~6월 5일</span></div>
+          <div class="step-desc">한국 이벤트가 있는 병원에 한해, 동일하게 무료 제작해드립니다 (수량 제한 없음).</div>
+          <div class="copy-img-box">
+            <div class="copy-img-title">📋 복붙 이미지 방식이란?</div>
+            <div class="copy-img-desc">국내 이벤트 이미지를 그대로 활용해 해당 국가 언어로 번역 후, 동일한 이미지 내에 번역된 텍스트를 삽입하여 제작합니다. 별도 디자인 없이 빠르게 제작 가능합니다.</div>
+          </div>
+          <a class="cta-link" href="https://tally.so/r/3q1EEO" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            해외 이벤트 무료 제작 신청하기
+          </a>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-label">글로벌 서비스 계약 + 이벤트 승인 완료<span class="step-tag">~6월 26일</span></div>
+          <div class="step-desc">글로벌 서비스 계약 완료 후, 신규 이벤트 7개 이상이 6월 26일(승인 기준)까지 모두 등록 완료되어야 합니다.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-label">환급 기산일 확정</div>
+          <div class="step-desc">신규 등록 이벤트 7개가 <strong style="color:#1a1a1a">모두 승인 완료된 날짜</strong>부터 환급 기간이 카운트됩니다. (월 단위 환급)</div>
+          <div class="example-box"><strong>예시</strong> — 3개는 5월 20일, 나머지 4개는 6월 1일 승인<br>→ 7개 완성일 = 6월 1일 → <strong>6월 1일~6월 30일 1개월분부터 환급</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-label">3개월간 7개 이벤트 유지 필수</div>
+          <div class="step-desc">신규 등록한 <strong style="color:#1a1a1a">7개 이벤트를 3개월간 반드시 유지</strong>해야 합니다. 기존에 등록된 이벤트도 3개월간 비활성화 불가.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-label">환급 적용 국가 기준</div>
+          <div class="step-desc"><strong style="color:#CC4A1A">해당 병원의 경우 선택된 국가로만 환급이 적용됩니다.</strong> 대상 국가가 여러 개인 경우 국가별로 각각 적용됩니다.</div>
+          <div class="example-box"><strong>예시</strong> — A성형외과의 대상 국가가 일본·태국인 경우<br>→ 일본 7개 + 태국 7개 등록 시, 각국 CPV 상위 3개씩 <strong>각각 30% 환급</strong><br>→ 미국·중국·대만은 대상 국가가 아니므로 환급 미적용</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="divider"></div>
+
+    <!-- 주의사항 -->
+    <div class="warn-box">
+      <div class="warn-header">
+        <div class="warn-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="warn-header-text">반드시 확인하세요 — 혜택 환수 조건</div>
+      </div>
+      <div class="warn-emphasis">
+        ⚠ 6월 26일까지 미등록하거나, 이벤트를 중간에 비활성화·중단하는 경우<br>월정액 면제 혜택 및 CPV 환급액 전액을 환수 조치할 수 있습니다.
+      </div>
+      <ul class="warn-list">
+        <li>6월 26일까지 제작해드린 이벤트를 미등록하거나, 글로벌 서비스 계약 미완료 시 월정액 면제 및 환급 혜택 전부 소급 취소됩니다.</li>
+        <li>신규 등록한 7개 이벤트 중 1개라도 3개월 이내 비활성화·삭제 시, 해당 시점부터 환급이 중단되며 기지급 환급액 환수 조치가 이루어질 수 있습니다.</li>
+        <li>기존에 등록된 이벤트를 3개월 내 비활성화하거나 삭제하는 경우에도 동일하게 혜택 환수 대상이 됩니다.</li>
+        <li>본 프로모션은 예외적으로 제공되는 한정 혜택으로, 조건 위반 시 사전 고지 없이 즉시 종료될 수 있습니다.</li>
+        <li>일정 및 조건은 내부 사정에 따라 사전 고지 없이 변경될 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <div class="contact-box">
+      <div class="contact-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        문의
+      </div>
+      <div class="contact-value">
+        담당 강남언니 영업팀 과장&nbsp;
+        <input class="contact-input" id="contactName" type="text" placeholder="이름 입력" oninput="updateContact(this.value)" />
+      </div>
+      <div class="contact-print" id="contactPrint">담당 강남언니 영업팀 과장</div>
+    </div>
+
+  </div><!-- /body -->
+
+  <div class="footer">
+    © 2026 강남언니 — 본 제안서는 내부 전용 자료입니다. 무단 배포를 금합니다.
+  </div>
+</div>
+
+<script>
+function updateContact(val){
+  var el=document.getElementById('contactPrint');
+  el.textContent='담당 강남언니 영업팀 과장'+(val.trim()?' '+val.trim():'');
+}
+function updateHospital(val){
+  var el=document.getElementById('hospitalDisplay');
+  var logo=document.getElementById('logoDiv');
+  if(val.trim()){
+    el.innerHTML='<span class="brand">강남언니</span><span class="x-mark">✕</span><span class="hosp">'+val.trim()+'</span>';
+    logo.style.display='none';
+  } else {
+    el.innerHTML='';
+    logo.style.display='flex';
+  }
+}
+function printPDF(){
+  var anyActive=Object.values(active).some(function(v){return v;});
+  if(!anyActive){
+    // 선택된 국가 없으면 경고
+    alert('PDF에 포함할 국가를 먼저 선택해주세요.');
+    return;
+  }
+  // 선택된 국가 패널만 인쇄에 포함 (비선택은 print-hide 처리)
+  ['jp','th','us','cn','tw'].forEach(function(k){
+    var panel=document.getElementById('panel-'+k);
+    if(active[k]){
+      panel.classList.add('show');
+      panel.classList.remove('print-hide');
+    } else {
+      panel.classList.add('print-hide');
+    }
+  });
+  document.getElementById('hint-empty').style.display='none';
+  setTimeout(function(){
+    window.print();
+    // 인쇄 후 print-hide 제거 (화면 복원)
+    ['jp','th','us','cn','tw'].forEach(function(k){
+      document.getElementById('panel-'+k).classList.remove('print-hide');
+    });
+  },150);
+}
+var active={jp:false,th:false,us:false,cn:false,tw:false};
+function toggleCountry(c){
+  active[c]=!active[c];
+  document.getElementById('btn-'+c).classList.toggle('active',active[c]);
+  document.getElementById('panel-'+c).classList.toggle('show',active[c]);
+  var any=Object.values(active).some(function(v){return v;});
+  document.getElementById('hint-empty').style.display=any?'none':'block';
+}
+</script>
+</body>
+</html>
