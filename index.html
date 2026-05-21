@@ -20,30 +20,65 @@
   .hospital-display .x-mark{color:rgba(255,255,255,0.6);margin:0 6px;font-weight:400}
   .hospital-display .brand{color:#fff}
   .hospital-display .hosp{color:#fff}
-  @media print{
-    .hospital-bar{display:none !important}
-    .hospital-display{display:block !important}
-  }
   /* --- */
   @media print{
-    body{background:#fff;padding:0}
+    @page{margin:12mm 10mm;size:A4}
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+
+    body{background:#fff !important;padding:0 !important}
     .pdf-bar{display:none !important}
-    .page{max-width:100%;border-radius:0;box-shadow:none;margin:0}
-    .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(135deg,#FF6B35 0%,#FF8C5A 100%) !important}
+    .hospital-bar{display:none !important}
+    .same-country-notice{display:none !important}
+    .country-row,.country-intro{display:none !important}
+    #hint-empty{display:none !important}
+
+    /* 페이지 레이아웃 */
+    .page{max-width:100% !important;border-radius:0 !important;box-shadow:none !important;margin:0 !important;overflow:visible !important}
+
+    /* 색상 강제 유지 */
+    .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(135deg,#FF6B35 0%,#FF8C5A 100%) !important;page-break-inside:avoid}
     .confidential{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#2C2C2A !important;color:#FAC775 !important}
-    .warn-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF0F0 !important}
+    .warn-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF0F0 !important;border:1.5px solid #E24B4A !important}
     .warn-emphasis{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#A32D2D !important;color:#fff !important}
     .refund-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF8F5 !important}
     .sched-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF8F5 !important}
-    .benefit-card,.note-box,.deadline-box,.example-box,.notice-inline{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .benefit-panel{display:block !important}
-    .benefit-panel.print-hide{display:none !important}
-    #hint-empty{display:none !important}
-    .country-row,.country-intro{display:none !important}
-    a.cta-link{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FF6B35 !important;color:#fff !important}
+    .copy-img-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#F0F4FF !important}
+    .same-country-notice{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#EBF3FC !important}
+    .notice-inline{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FFF3F3 !important}
+    .example-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#F7F5F2 !important}
+    .benefit-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;border:1.5px solid #FF6B35 !important}
     .step-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FF6B35 !important}
     .hero-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:rgba(255,255,255,0.22) !important}
-    @page{margin:10mm;size:A4}
+    a.cta-link{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#FF6B35 !important;color:#fff !important}
+    .contact-box{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#F7F5F2 !important}
+
+    /* 페이지 잘림 방지 */
+    .sched-grid{page-break-inside:avoid;break-inside:avoid}
+    .benefit-card{page-break-inside:avoid;break-inside:avoid}
+    .benefit-panel{page-break-inside:avoid;break-inside:avoid}
+    .refund-box{page-break-inside:avoid;break-inside:avoid}
+    .step{page-break-inside:avoid;break-inside:avoid}
+    .warn-box{page-break-inside:avoid;break-inside:avoid}
+    .warn-emphasis{page-break-inside:avoid;break-inside:avoid}
+    .section-title{page-break-after:avoid;break-after:avoid}
+    .divider{page-break-after:avoid;break-after:avoid}
+    .copy-img-box{page-break-inside:avoid;break-inside:avoid}
+    .contact-box{page-break-inside:avoid;break-inside:avoid}
+
+    /* 패널 표시 제어 */
+    .benefit-panel{display:block !important}
+    .benefit-panel.print-hide{display:none !important}
+
+    /* 문의 중복 텍스트 수정 */
+    .contact-input{display:none !important}
+    .contact-print{display:inline !important}
+    .contact-value > *:not(.contact-print){display:none !important}
+    .contact-value{gap:0 !important}
+
+    /* 병원명 */
+    .hospital-display{display:block !important}
+    .hospital-bar{display:none !important}
   }
   .page{max-width:720px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)}
 
@@ -154,12 +189,9 @@
   .contact-input{border:none;border-bottom:1.5px solid #E0DDD8;outline:none;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#FF6B35;background:transparent;padding:1px 4px;width:120px;transition:border-color 0.15s}
   .contact-input:focus{border-bottom-color:#FF6B35}
   .contact-input::placeholder{color:#ccc;font-weight:400}
+  .contact-screen{display:inline-flex;align-items:center;gap:4px}
   .contact-print{display:none;font-size:13px;font-weight:600;color:#444}
-  @media print{
-    .contact-box{background:#F7F5F2 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .contact-input{display:none !important}
-    .contact-print{display:inline !important}
-  }
+
   /* footer */
   .footer{background:#F7F5F2;padding:1.25rem 2rem;text-align:center;font-size:11px;color:#bbb;border-top:1px solid #EEE}
 
@@ -412,10 +444,9 @@
         문의
       </div>
       <div class="contact-value">
-        담당 강남언니 영업팀 과장&nbsp;
-        <input class="contact-input" id="contactName" type="text" placeholder="이름 입력" oninput="updateContact(this.value)" />
+        <span class="contact-screen">담당 강남언니 영업팀 과장&nbsp;<input class="contact-input" id="contactName" type="text" placeholder="이름 입력" oninput="updateContact(this.value)" /></span>
+        <span class="contact-print" id="contactPrint">담당 강남언니 영업팀 과장</span>
       </div>
-      <div class="contact-print" id="contactPrint">담당 강남언니 영업팀 과장</div>
     </div>
 
   </div><!-- /body -->
