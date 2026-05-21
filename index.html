@@ -227,7 +227,7 @@
     </div>
     <div class="hero-badge">글로벌 서비스 단독 프로모션</div>
     <div class="hero-title">글로벌 신규 입점 &<br>이벤트 확장 프로모션</div>
-    <div class="hero-sub" style="margin-top:8px">일본 · 태국 · 미국 · 중국 · 대만 — 6월 한정 특별 혜택</div>
+    <div class="hero-sub" id="heroSub" style="margin-top:8px">일본 · 태국 · 미국 · 중국 · 대만 — 6월 한정 특별 혜택</div>
   </div>
 
   <div class="confidential">
@@ -499,12 +499,30 @@ function printPDF(){
   },150);
 }
 var active={jp:false,th:false,us:false,cn:false,tw:false};
+var countryInfo={
+  jp:{flag:'🇯🇵',name:'일본'},
+  th:{flag:'🇹🇭',name:'태국'},
+  us:{flag:'🇺🇸',name:'미국'},
+  cn:{flag:'🇨🇳',name:'중국'},
+  tw:{flag:'🇹🇼',name:'대만'}
+};
+function updateHeroSub(){
+  var selected=Object.keys(active).filter(function(k){return active[k];});
+  var sub=document.getElementById('heroSub');
+  if(selected.length===0){
+    sub.innerHTML='일본 · 태국 · 미국 · 중국 · 대만 — 6월 한정 특별 혜택';
+  } else {
+    var labels=selected.map(function(k){return countryInfo[k].flag+' '+countryInfo[k].name;});
+    sub.innerHTML=labels.join(' · ')+' — 6월 한정 특별 혜택';
+  }
+}
 function toggleCountry(c){
   active[c]=!active[c];
   document.getElementById('btn-'+c).classList.toggle('active',active[c]);
   document.getElementById('panel-'+c).classList.toggle('show',active[c]);
   var any=Object.values(active).some(function(v){return v;});
   document.getElementById('hint-empty').style.display=any?'none':'block';
+  updateHeroSub();
 }
 </script>
 </body>
