@@ -405,7 +405,7 @@
           <div class="step-desc">프로모션 참여 전 이미 라이브 중인 이벤트도 <strong style="color:#1a1a1a">3개월간 OFF 불가</strong>합니다. 기존 이벤트 비활성화 시에도 동일하게 혜택 환수 대상이 됩니다.</div>
         </div>
       </div>
-      <div class="step">
+      <div class="step" id="step-multicountry" style="display:none">
         <div class="step-num">5</div><div class="step-line"></div>
         <div class="step-body">
           <div class="step-label">환급 적용 국가 기준</div>
@@ -523,6 +523,8 @@ function toggleCountry(c){
   var any=Object.values(active).some(function(v){return v;});
   document.getElementById('hint-empty').style.display=any?'none':'block';
   updateHeroSub();
+  var selectedCount=Object.values(active).filter(function(v){return v;}).length;
+  document.getElementById('step-multicountry').style.display=selectedCount>=2?'flex':'none';
 }
 </script>
 </body>
