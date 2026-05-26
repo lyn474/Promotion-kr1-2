@@ -472,31 +472,40 @@ function updateHospital(val){
     logo.style.display='flex';
   }
 }
+// 인쇄 완료 후 화면 복원 (afterprint 이벤트로 타이밍 문제 해결)
+window.addEventListener('afterprint', function(){
+  ['jp','th','us','cn','tw'].forEach(function(k){
+    var panel=document.getElementById('panel-'+k);
+    panel.classList.remove('print-hide');
+    // 원래 선택 상태 복원
+    if(active[k]){
+      panel.classList.add('show');
+    }
+  });
+  document.getElementById('hint-empty').style.display=
+    Object.values(active).some(function(v){return v;}) ? 'none' : 'block';
+});
+
 function printPDF(){
   var anyActive=Object.values(active).some(function(v){return v;});
   if(!anyActive){
-    // 선택된 국가 없으면 경고
     alert('PDF에 포함할 국가를 먼저 선택해주세요.');
     return;
   }
-  // 선택된 국가 패널만 인쇄에 포함 (비선택은 print-hide 처리)
+  // 선택된 국가만 표시, 나머지는 print-hide
   ['jp','th','us','cn','tw'].forEach(function(k){
     var panel=document.getElementById('panel-'+k);
     if(active[k]){
       panel.classList.add('show');
       panel.classList.remove('print-hide');
     } else {
+      panel.classList.remove('show');
       panel.classList.add('print-hide');
     }
   });
   document.getElementById('hint-empty').style.display='none';
-  setTimeout(function(){
-    window.print();
-    // 인쇄 후 print-hide 제거 (화면 복원)
-    ['jp','th','us','cn','tw'].forEach(function(k){
-      document.getElementById('panel-'+k).classList.remove('print-hide');
-    });
-  },150);
+  // DOM 업데이트 완전히 반영된 후 인쇄
+  setTimeout(function(){ window.print(); }, 300);
 }
 var active={jp:false,th:false,us:false,cn:false,tw:false};
 var countryInfo={
